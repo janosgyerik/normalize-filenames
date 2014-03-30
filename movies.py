@@ -5,6 +5,7 @@ re_split_to_parts = re.compile(r'(.*\w).*(\d{4}).*\.(...)$')
 re_split_to_parts_noyear = re.compile(r'(.*\w).*\.(...)$')
 re_split_to_parts_noext = re.compile(r'(.*\w).*(\d{4}).*$')
 re_split_to_parts_noyear_noext = re.compile(r'(.*\w)')
+re_multiple_spaces = re.compile(r' {2,}')
 
 
 class MovieFilenameNormalizer(object):
@@ -18,8 +19,8 @@ class MovieFilenameNormalizer(object):
         n_basename = self.normalize_basename(basename)
         n_ext = self.normalize_ext(ext)
         if year:
-            return '%s (%s).%s', n_basename, year, n_ext
-        return '%s.%s', n_basename, n_ext
+            return '%s (%s).%s' % (n_basename, year, n_ext)
+        return '%s.%s' % (n_basename, n_ext)
 
     def split_to_parts(self, filename):
         match = re_split_to_parts.match(filename)
@@ -36,7 +37,7 @@ class MovieFilenameNormalizer(object):
         return filename, None, None
 
     def normalize_basename(self, basename):
-        return basename.strip().title()
+        return re_multiple_spaces.sub(' ', basename.strip()).title()
 
     def normalize_ext(self, ext):
         return ext.lower()

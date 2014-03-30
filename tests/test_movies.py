@@ -37,12 +37,12 @@ class NormalizerTestCase(unittest.TestCase):
         self.assertFalse(self.normalizer.is_well_formatted(' 12 Months (2012).mkv'))
         self.assertFalse(self.normalizer.is_well_formatted('12 Months  (2012).mkv'))
 
-    def xtest_normalize(self):
-        well_formatted = 'La Dolce Vita (1961).avi'
+    def test_normalize(self):
+        well_formatted = 'La Dolce (1961).avi'
         self.assertEqual(well_formatted, self.normalizer.normalize(well_formatted))
-        self.assertEqual(well_formatted, self.normalizer.normalize('La Dolce Vita[1961]DVDrip[Eng Subs].avi'))
-        self.assertEqual(well_formatted, self.normalizer.normalize('La Dolce Vita[1961].avi'))
-        self.assertEqual(well_formatted, self.normalizer.normalize('La Dolce Vita [1961].avi'))
+        self.assertEqual(well_formatted, self.normalizer.normalize('La Dolce[1961]DVDrip[Eng Subs].avi'))
+        self.assertEqual(well_formatted, self.normalizer.normalize('La Dolce[1961].avi'))
+        self.assertEqual(well_formatted, self.normalizer.normalize('La Dolce [1961].avi'))
         self.assertEqual(well_formatted, self.normalizer.normalize('La Dolce [1961].avi'))
         self.assertEqual(well_formatted, self.normalizer.normalize('La Dolce {1961}.avi'))
         self.assertEqual(well_formatted, self.normalizer.normalize('La Dolce <1961>.avi'))
@@ -52,7 +52,6 @@ class NormalizerTestCase(unittest.TestCase):
         self.assertEqual(well_formatted, self.normalizer.normalize('La  Dolce (1961).avi'))
         self.assertEqual(well_formatted, self.normalizer.normalize('La Dolce (1961).avi'))
         self.assertEqual(well_formatted, self.normalizer.normalize('La Dolce ( 1961).avi'))
-        self.assertEqual(well_formatted, self.normalizer.normalize('La Dolce.avi', 1961))
 
     def assert_basename(self, expected, filename):
         basename, _, _ = self.normalizer.split_to_parts(filename)
