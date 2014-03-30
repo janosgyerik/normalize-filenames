@@ -59,7 +59,7 @@ class NormalizerTestCase(unittest.TestCase):
 
     def assert_year(self, expected, filename):
         _, year, _ = self.normalizer.split_to_parts(filename)
-        self.assertEqual(expected, self.normalizer.normalize_year(year))
+        self.assertEqual(expected, year)
 
     def test_normalize_basename(self):
         self.assert_basename('La Dolce', 'La Dolce [1961].avi')
@@ -76,7 +76,7 @@ class NormalizerTestCase(unittest.TestCase):
         self.assert_basename('La Dolce', 'La Dolce 1961')
         self.assert_basename('La Dolce', 'la dolce')
 
-    def xtest_normalize_year(self):
+    def test_normalize_year(self):
         self.assert_year('1961', 'La Dolce [1961].avi')
         self.assert_year('1961', 'la dolce [1961].avi')
         self.assert_year('1961', 'la DOLCE [1961].avi')
@@ -87,9 +87,8 @@ class NormalizerTestCase(unittest.TestCase):
         self.assert_year('1961', 'La Dolce [1961].avi')
         self.assert_year('1961', 'La Dolce {1961}.avi')
         self.assert_year('1961', 'La Dolce <1961>.avi')
-        self.assert_year('1961', 'La Dolce.avi')
+        self.assert_year(None, 'La Dolce.avi')
         self.assert_year('1961', 'La Dolce 1961')
-        self.assert_year('1961', '1961')
 
 
 def test_main():
