@@ -11,14 +11,15 @@ class MovieFilenameNormalizer(object):
     def is_well_formatted(self, filename):
         return re_well_formatted.match(filename)
 
-    def normalize(self, filename, year=None):
+    def normalize(self, filename):
         if self.is_well_formatted(filename):
             return filename
-        basename, detected_year, ext = self.split_to_parts(filename)
+        basename, year, ext = self.split_to_parts(filename)
         n_basename = self.normalize_basename(basename)
-        n_year = self.normalize_year(n_basename, detected_year, year)
         n_ext = self.normalize_ext(ext)
-        return n_basename, n_year, n_ext
+        if year:
+            return '%s (%s).%s', n_basename, year, n_ext
+        return '%s.%s', n_basename, n_ext
 
     def split_to_parts(self, filename):
         match = re_split_to_parts.match(filename)
@@ -36,15 +37,6 @@ class MovieFilenameNormalizer(object):
 
     def normalize_basename(self, basename):
         return basename.strip().title()
-
-    def normalize_year(self, basename, detected_year, year):
-        if year:
-            return year
-        if detected_year:
-            return detected_year
-        # todo lookup from movie database
-        # todo prob need to refactor, as this would need to be interactive
-        return None
 
     def normalize_ext(self, ext):
         return ext.lower()
