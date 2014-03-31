@@ -1,7 +1,7 @@
 import re
 
 re_well_formatted = re.compile(r'([A-Z0-9]\w* )+\(\d{4}\)\.[a-z][a-z0-9]{2}$')
-re_split_to_parts = re.compile(r'(.*\w).*(\d{4}).*\. *(...) *$')
+re_split_to_parts = re.compile(r'(.*\w).*(\d{4})\b.*\. *(...) *$')
 re_split_to_parts_noyear = re.compile(r'(.*\w).*\. *(...) *$')
 re_split_to_parts_noext = re.compile(r'(.*\w).*(\d{4}).*$')
 re_split_to_parts_noyear_noext = re.compile(r'(.*\w)')
@@ -37,7 +37,11 @@ class MovieFilenameNormalizer(object):
         return filename, None, None
 
     def normalize_basename(self, basename):
-        return re_multiple_spaces.sub(' ', basename.strip()).title()
+        tmp = basename.strip()
+        tmp = re.sub(r' {2,}', ' ', tmp)
+        tmp = re.sub(r'\.\b', ' ', tmp)
+        tmp = tmp.title()
+        return tmp
 
     def normalize_ext(self, ext):
         if ext:

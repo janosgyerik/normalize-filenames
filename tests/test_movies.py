@@ -63,6 +63,7 @@ class NormalizerTestCase(unittest.TestCase):
         self.assert_basename('La Dolce', 'la DOLCE [1961].avi')
         self.assert_basename('La Dolce', ' La Dolce [1961].avi')
         self.assert_basename('La Dolce', 'La Dolce  [1961].avi')
+        self.assert_basename('La Dolce', 'La  Dolce  [1961].avi')
         self.assert_basename('La Dolce', 'La Dolce[1961]DVDrip[Eng Subs].avi')
         self.assert_basename('La Dolce', 'La Dolce[1961].avi')
         self.assert_basename('La Dolce', 'La Dolce [1961].avi')
@@ -71,6 +72,8 @@ class NormalizerTestCase(unittest.TestCase):
         self.assert_basename('La Dolce', 'La Dolce.avi')
         self.assert_basename('La Dolce', 'La Dolce 1961')
         self.assert_basename('La Dolce', 'la dolce')
+        self.assert_basename('La Dolce', 'la.dolce')
+        self.assert_basename('American Hustle', 'American.Hustle.2013.1080p.BluRay.x264.YIFY.mp4')
 
     def assert_year(self, expected, filename):
         _, year, _ = self.normalizer.split_to_parts(filename)
@@ -89,6 +92,7 @@ class NormalizerTestCase(unittest.TestCase):
         self.assert_year('1961', 'La Dolce <1961>.avi')
         self.assert_year(None, 'La Dolce.avi')
         self.assert_year('1961', 'La Dolce 1961')
+        self.assert_year('2013', 'American.Hustle.2013.1080p.BluRay.x264.YIFY.mp4')
 
     def assert_ext(self, expected, filename):
         _, _, ext = self.normalizer.split_to_parts(filename)
