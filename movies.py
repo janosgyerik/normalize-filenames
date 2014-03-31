@@ -41,6 +41,7 @@ class MovieFilenameNormalizer(object):
         tmp = re.sub(r' {2,}', ' ', tmp)
         tmp = re.sub(r'\.\b', ' ', tmp)
         tmp = ' '.join([x.capitalize() for x in tmp.lower().split(' ')])
+        tmp = re.sub(r'-([a-z])', lambda match: '-' + match.group(1).upper(), tmp)
         return tmp
 
     def normalize_ext(self, ext):

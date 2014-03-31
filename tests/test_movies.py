@@ -76,6 +76,7 @@ class NormalizerTestCase(unittest.TestCase):
         self.assert_basename('American Hustle', 'American.Hustle.2013.1080p.BluRay.x264.YIFY.mp4')
         self.assert_basename("You've Got Mail", "You've Got Mail.avi")
         self.assert_basename("What's Up Doc", "What's Up Doc.avi")
+        self.assert_basename("Frost-Nixon", "Frost-nixon.avi")
 
     def assert_year(self, expected, filename):
         _, year, _ = self.normalizer.split_to_parts(filename)
