@@ -38,6 +38,7 @@ class MovieFilenameNormalizer(object):
 
     def normalize_basename(self, basename):
         tmp = basename.strip()
+        tmp = re.sub(r'_', ' ', tmp)
         tmp = re.sub(r' {2,}', ' ', tmp)
         tmp = re.sub(r'\.\b', ' ', tmp)
         tmp = ' '.join([x.capitalize() for x in tmp.lower().split(' ')])
