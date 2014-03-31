@@ -106,6 +106,15 @@ class NormalizerTestCase(unittest.TestCase):
         self.assert_ext('avi', 'la DOLCE [1961]. avi')
         self.assert_ext('avi', 'La Dolce  [1961].avi ')
 
+    def test_valid_extension(self):
+        self.assertFalse(self.normalizer.has_valid_extension('', 'avi', 'mkv'))
+        self.assertFalse(self.normalizer.has_valid_extension('file.txt', 'avi', 'mkv'))
+        self.assertFalse(self.normalizer.has_valid_extension('file.avi2', 'avi', 'mkv'))
+        self.assertFalse(self.normalizer.has_valid_extension('file.2avi', 'avi', 'mkv'))
+        self.assertFalse(self.normalizer.has_valid_extension('avi', 'avi', 'mkv'))
+        self.assertTrue(self.normalizer.has_valid_extension('file. avi', 'avi', 'mkv'))
+        self.assertTrue(self.normalizer.has_valid_extension('file.avi ', 'avi', 'mkv'))
+
 
 def test_main():
     run_unittest(

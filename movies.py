@@ -46,3 +46,9 @@ class MovieFilenameNormalizer(object):
     def normalize_ext(self, ext):
         if ext:
             return ext.lower()
+
+    def has_valid_extension(self, fn, *extlist):
+        n_fn = self.normalize(fn)
+        n_extlist = [x.strip().lower() for x in extlist]
+        parts = n_fn.split('.')
+        return len(parts) > 1 and parts[-1] in n_extlist
